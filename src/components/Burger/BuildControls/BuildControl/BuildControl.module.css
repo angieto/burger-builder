@@ -11,9 +11,10 @@
     padding: 5px;
     margin: 0 5px;
     width: 80px;
-    border: 1px solid rgb(199, 86, 34);
+    border: 1px solid #AA6817;
     cursor: pointer;
-    outline: none; 
+    outline: none;
+    border-radius: 8px;
 }
 
 .BuildControl button:disabled {
@@ -41,7 +42,7 @@
 }
 
 .BuildControl .Add {
-    background-color: #8F5E1E;
+    background-color: rgb(245, 136, 33);
     color: white;
 }
 
