@@ -13,7 +13,7 @@ const burger = (props) => {
     // use reduce() to flatten the arr of Arrays to the arr of <BurgerIngredient/> and access its length
     let transformedIngredients = Object.keys(props.ingredients)
                                          .map(key => {
-                                             return Array(props.ingredients[key]).map( (_,i) => {
+                                             return [...Array(props.ingredients[key])].map( (_,i) => {
                                                  return <BurgerIngredient key={key+i} type={key} />
                                              }); 
                                          })
