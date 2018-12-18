@@ -3,7 +3,7 @@ import classes from './Burger.module.css';
 import BurgerIngredient from './BurgerIngredients/BurgerIngredients';
 
 const burger = (props) => {
-    // Object.keys() returns an array of keys
+    // Object.keys() loops through the object and returns an array of keys
     // .map() executes a function on each element of the array and returns a new array
     // Array(num) creates a new array with num space
     // since the arugument itself is not used in this case, name it as "_"
@@ -13,7 +13,7 @@ const burger = (props) => {
     // use reduce() to flatten the arr of Arrays to the arr of <BurgerIngredient/> and access its length
     let transformedIngredients = Object.keys(props.ingredients)
                                          .map(key => {
-                                             return [...Array(props.ingredients[key])].map( (_,i) => {
+                                             return Array(props.ingredients[key]).map( (_,i) => {
                                                  return <BurgerIngredient key={key+i} type={key} />
                                              }); 
                                          })
