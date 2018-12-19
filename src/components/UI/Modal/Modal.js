@@ -3,7 +3,7 @@ import classes from './Modal.module.css';
 import Backdrop from '../Backdrop/Backdrop';
 
 class Modal extends Component {
-    // for run time optimization, only rerender when the purchase state (props) is changed
+    // for an optimal run time, only rerender when the purchase state (props) is changed
     shouldComponentUpdate(nextProps, nextState) {
         return nextProps.show !== this.props.show;
     }
