@@ -5,10 +5,14 @@ import NavigationItems from '../NavigationItems/NavigationItems';
 import Backdrop from '../../UI/Backdrop/Backdrop';
 
 const sideDrawer = (props) => {
+    let attachedClasses = [classes.SideDrawer, classes.Close].join(' ');
+    if (props.open) {
+        attachedClasses = [classes.SideDrawer, classes.Open].join(' ');
+    }    
     return(
         <>
-            <div className={classes.SideDrawer}>
-                <Backdrop show={true}/>
+            <Backdrop show={props.open} clicked={props.closed}/>
+            <div className={attachedClasses}>
                 <div className={classes.Logo}>
                     <Logo />
                 </div>
