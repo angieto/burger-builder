@@ -10,14 +10,20 @@ const errorHandler = ( WrappedComponent, axios ) => {
         // handle error - does not account the component's children
         componentWillMount = () => {
             // first clear up any previous errors 
-            axios.interceptors.request.use(req => {
+            this.reqInterceptor = axios.interceptors.request.use(req => {
                 this.setState({ error: null });
                 return req;
             });
-            axios.interceptors.response.use(res => res, err => {
+            this.resInterceptoraxios.interceptors.response.use(res => res, err => {
                 // firebase has err.message
                 this.setState({ error: err });
             });
+        }
+
+        // to prevent memory leak, remove interceptor once componentWillUnmount() is called
+        componentWillUnmount = () => {
+            axios.interceptors.request.eject(this.reqInterceptor);
+            axios.interceptors.request.eject(this.resInterceptor);
         }
 
         // method
