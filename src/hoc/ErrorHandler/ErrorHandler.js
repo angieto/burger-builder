@@ -7,8 +7,8 @@ const errorHandler = ( WrappedComponent, axios ) => {
             error: null
         };
     
-        // handle error
-        componentDidMount = () => {
+        // handle error - does not account the component's children
+        componentWillMount = () => {
             // first clear up any previous errors 
             axios.interceptors.request.use(req => {
                 this.setState({ error: null });
