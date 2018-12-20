@@ -7,6 +7,9 @@ import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
+// import global error handler
+import ErrorHandler from '../../hoc/ErrorHandler/ErrorHandler';
+
 // name a GLOBAL const in capital letters
 const INGREDIENT_PRICES = {
     salad: 0.5,
@@ -81,6 +84,7 @@ class BurgerBuilder extends Component {
             },
             deliveryMethod: 'fastest'
         }
+        // submit the order to the assigned url address as a json data (required format)
         axios.post('/orders.json', order)
              .then(res => this.setState({ loading: false, purchasing: false }))
              .catch(err => this.setState({ loading: false, purchasing: false }));
@@ -123,4 +127,4 @@ class BurgerBuilder extends Component {
     }
 }
 
-export default BurgerBuilder;
+export default ErrorHandler(BurgerBuilder, axios);
