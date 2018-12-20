@@ -4,8 +4,9 @@ import Backdrop from '../Backdrop/Backdrop';
 
 class Modal extends Component {
     // for an optimal run time, only rerender when the purchase state (props) is changed
+    // or when orderSummery's value's changed
     shouldComponentUpdate(nextProps, nextState) {
-        return nextProps.show !== this.props.show;
+        return nextProps.show !== this.props.show || nextProps.children !== this.props.children;
     }
 
     componentWillUpdate() {
