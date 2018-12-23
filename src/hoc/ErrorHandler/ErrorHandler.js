@@ -14,7 +14,7 @@ const errorHandler = ( WrappedComponent, axios ) => {
                 this.setState({ error: null });
                 return req;
             });
-            this.resInterceptoraxios.interceptors.response.use(res => res, err => {
+            this.resInterceptor = axios.interceptors.response.use(res => res, err => {
                 // firebase has err.message
                 this.setState({ error: err });
             });
