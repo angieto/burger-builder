@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Summary from '../../components/Order/Summary/Summary';
+import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
 
 class Checkout extends Component {
     state = {
@@ -11,10 +11,21 @@ class Checkout extends Component {
         }
     }
 
+    checkoutCancelledHandler = () => {
+        this.props.history.goBack();
+    }
+
+    checkoutContinuedHandler = () => {
+        this.props.history.replace('/checkout/contact-data');
+    }
+
     render() {
         return (
             <div>
-                <Summary ingredients={this.state.ingredients} />
+                <CheckoutSummary ingredients={this.state.ingredients} 
+                                 checkoutCancelled={this.checkoutCancelledHandler}
+                                 checkoutContinued={this.checkoutContinuedHandler}
+                />
             </div>
         );
     }
