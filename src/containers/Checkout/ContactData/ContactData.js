@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from '../../../axios-orders';
-import WithRouter from 'react-router-dom';
 
 import Button from '../../../components/UI/Button/Button';
 import Spinner from '../../../components/UI/Spinner/Spinner';
@@ -14,17 +13,16 @@ class ContactData extends Component {
             street: '',
             postalCode: ''
         },
-        loading: false
+        loading: false,
     }
 
     // methods
     orderHandler = (event) => {
         event.preventDefault();
-        // console.log(this.props.ingredients);
         this.setState({ loading: true });
         const order = {
             ingredients: this.props.ingredients,
-            price: this.state.totalPrice,
+            price: this.props.price,
             customer: {
                 name: 'me',
                 address: {
@@ -36,21 +34,20 @@ class ContactData extends Component {
             },
             deliveryMethod: 'fastest'
         }
-        // submit the order to the assigned url address as a json data (required format)
         axios.post('/orders.json', order)
              .then(res => {
-                 this.setState({ loading: false, purchasing: false });
+                 this.setState({ loading: false });
                  // we need to pass the props from Checkout to here to access its history info
                  console.log(this.props.history);
                  // redirect back to the main page
                  this.props.history.push('/');
              })
-             .catch(err => this.setState({ loading: false, purchasing: false }));
+             .catch(err => this.setState({ loading: false }));
     }
 
     render() {
         let form = (
-            <form action="">
+            <form>
                 <input type="text" name="name" placeholder="Name"/>
                 <input type="email" name="email" placeholder="Email Address"/>
                 <input type="text" name="street" placeholder="Street"/>
