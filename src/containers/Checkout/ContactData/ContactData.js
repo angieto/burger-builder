@@ -54,7 +54,7 @@ class ContactData extends Component {
                 elementConfig: {
                     options: [
                         {value: 'standard', displayValue: 'Standard (within 2 hours)'},
-                        {value: 'express', displayValue: 'Express (within 30 minutes'}
+                        {value: 'express', displayValue: 'Express (within 30 minutes)'}
                     ]
                 },
                 value: ''
@@ -107,7 +107,7 @@ class ContactData extends Component {
         }
 
         let form = (
-            <form onSubmit={}>
+            <form onSubmit={this.orderHandler}>
                 { formElements.map( formElement => (
                     <Input key={formElement.id}
                            elementType={formElement.config.elementType} 
@@ -115,7 +115,7 @@ class ContactData extends Component {
                            value={formElement.config.value}
                            changed={(event) => this.inputChangedHandler(event, formElement.id)} />
                 ) ) }
-                <p><Button btnType="Success" clicked={this.orderHandler}>ORDER</Button></p>
+                <p><Button btnType="Success">ORDER</Button></p>
             </form>
         );
         if (this.state.loading) {
