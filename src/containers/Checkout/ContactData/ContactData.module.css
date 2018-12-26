@@ -8,12 +8,6 @@
     box-sizing: border-box;
 }
 
-.ContactData input {
-    margin: 3% 5%;
-    border-radius: 6px;
-    padding: 5px;
-}
-
 .ContactData h4 {
     margin: 10% auto;
     color: forestgreen;
