@@ -15,7 +15,9 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Name'
                 },
-                value: ''
+                value: '',
+                validation: { required: true, minLength: 2 },
+                valid: false
             },
             street: {
                 elementType: 'input',
@@ -23,7 +25,9 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Street'
                 },
-                value: ''
+                value: '',
+                validation: { required: true, minLength: 5 },
+                valid: false
             },
             zipCode: {
                 elementType: 'input',
@@ -31,7 +35,9 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Zip Code'
                 },
-                value: ''
+                value: '',
+                validation: { required: true, minLength: 5, maxLength: 5 },
+                valid: false
             },
             country: {
                 elementType: 'input',
@@ -39,7 +45,9 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Country'
                 },
-                value: ''
+                value: '',
+                validation: { required: true, minLength: 2 },
+                valid: false
             },
             email: {
                 elementType: 'input',
@@ -47,7 +55,9 @@ class ContactData extends Component {
                     type: 'email',
                     placeholder: 'Email Address'
                 },
-                value: ''
+                value: '',
+                validation: { required: true, minLength: 10 },
+                valid: false
             },
             deliveryMethod: {
                 elementType: 'select',
@@ -57,9 +67,11 @@ class ContactData extends Component {
                         {value: 'express', displayValue: 'Express (within 30 minutes)'}
                     ]
                 },
-                value: ''
+                value: '',
+                valid: true
             },
         },
+        formIsValid: false,
         loading: false
     }
 
@@ -87,14 +99,37 @@ class ContactData extends Component {
              .catch(err => this.setState({ loading: false }));
     }
 
+    checkValidity (value, rules) {
+        let isValid = true;
+        if (rules.required) {
+            isValid = value.trim() !== '' && isValid;
+        }
+        if (rules.minLength) {
+            isValid = value.length >= rules.minLength && isValid;
+        }
+        if (rules.maxLength) {
+            isValid = value.length <= rules.maxLength && isValid;
+        }
+        return isValid;
+    }
+
     inputChangedHandler = (event, inputIdentifier) => {
         // console.log(event.target.value);
         const updatedOrderForm = { ...this.state.orderForm };
         // clone another extra level
         const updatedFormElement = { ...updatedOrderForm[inputIdentifier] }; 
         updatedFormElement.value = event.target.value;
+        // validate user's input
+        updatedFormElement.valid = this.checkValidatiry(updatedFormElement.value, updatedFormElement.validation);
+
         updatedOrderForm[inputIdentifier] = updatedFormElement;
-        this.setState({ orderForm: updatedOrderForm });
+
+        // loop through updateOrderForm to validate each inputIdentifier 
+        let formIsValid = true;
+        for (let inputIdentifier in updatedOrderForm) {
+            formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
+        }
+        this.setState({ orderForm: updatedOrderForm, formIsValid: formIsValid });
     }
 
     render() {
