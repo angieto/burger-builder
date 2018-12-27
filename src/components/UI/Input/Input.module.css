@@ -29,3 +29,8 @@
 .Invalid {
     border: 1px solid crimson;
 }
+
+.ErrorMsg {
+    color: red;
+    margin: 5px 0;
+}

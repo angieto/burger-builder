@@ -18,7 +18,8 @@ class ContactData extends Component {
                 value: '',
                 validation: { required: true, minLength: 2 },
                 valid: false,
-                touched: false
+                touched: false,
+                errorMsg: ''
             },
             street: {
                 elementType: 'input',
@@ -29,7 +30,8 @@ class ContactData extends Component {
                 value: '',
                 validation: { required: true, minLength: 5 },
                 valid: false,
-                touched: false
+                touched: false,
+                errorMsg: ''
             },
             zipCode: {
                 elementType: 'input',
@@ -40,7 +42,8 @@ class ContactData extends Component {
                 value: '',
                 validation: { required: true, minLength: 5, maxLength: 5 },
                 valid: false,
-                touched: false
+                touched: false,
+                errorMsg: ''
             },
             country: {
                 elementType: 'input',
@@ -51,7 +54,8 @@ class ContactData extends Component {
                 value: '',
                 validation: { required: true, minLength: 2 },
                 valid: false,
-                touched: false
+                touched: false,
+                errorMsg: ''
             },
             email: {
                 elementType: 'input',
@@ -62,7 +66,8 @@ class ContactData extends Component {
                 value: '',
                 validation: { required: true, minLength: 10 },
                 valid: false,
-                touched: false
+                touched: false,
+                errorMsg: ''
             },
             deliveryMethod: {
                 elementType: 'select',
@@ -118,6 +123,22 @@ class ContactData extends Component {
         return isValid;
     }
 
+    generateErrorMsg (value, rules) {
+        let errorMsg = '';
+        if (rules.required && value.trim() === '') {
+            errorMsg = 'All fields are required!';
+            return errorMsg;
+        }
+        if (rules.minLength && value.length < rules.minLength) {
+            errorMsg = `Minimum ${rules.minLength} characters`;
+            return errorMsg;
+        }
+        if (rules.maxLength && value.length > rules.maxLength) {
+            errorMsg = `Input should not be longer than ${rules.maxLength} characters`;
+            return errorMsg;
+        }
+    }
+
     inputChangedHandler = (event, inputIdentifier) => {
         // console.log(event.target.value);
         const updatedOrderForm = { ...this.state.orderForm };
@@ -128,6 +149,8 @@ class ContactData extends Component {
         updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
         // if user click on input -> touched = true
         updatedFormElement.touched = true;
+        // custom ErrorMsg
+        updatedFormElement.errorMsg = this.generateErrorMsg(updatedFormElement.value, updatedFormElement.validation);
         updatedOrderForm[inputIdentifier] = updatedFormElement;
 
         console.log(updatedFormElement);
@@ -159,9 +182,11 @@ class ContactData extends Component {
                            // check if there's validation rule for the config
                            shouldValidate={formElement.config.validation}
                            touched={formElement.config.touched}
+                           // errorMsg
+                           errorMsg={formElement.config.errorMsg}
                            changed={(event) => this.inputChangedHandler(event, formElement.id)} />
                 ) ) }
-                <p><Button btnType="Success">ORDER</Button></p>
+                <p><Button btnType="Success" disabled={this.state.formIsValid}>ORDER</Button></p>
             </form>
         );
         if (this.state.loading) {
