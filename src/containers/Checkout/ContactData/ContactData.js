@@ -77,7 +77,8 @@ class ContactData extends Component {
                         {value: 'express', displayValue: 'Express (within 30 minutes)'}
                     ]
                 },
-                value: '',
+                value: 'standard', // default value 
+                validation: {}, // to prevent undefined error when looped through checkValidity 
                 valid: true
             },
         },
@@ -111,6 +112,8 @@ class ContactData extends Component {
 
     checkValidity (value, rules) {
         let isValid = true;
+        // alternative way to handle undefined error for the drop down menu
+        // if (!rules) return isValid;
         if (rules.required) {
             isValid = value.trim() !== '' && isValid;
         }
