@@ -20,9 +20,10 @@ const INGREDIENT_PRICES = {
 
 class BurgerBuilder extends Component {
     state = {
-        // ingredients: { salad: 0, bacon: 0, cheese: 0, meat: 0 },
+        // redux cases
         ingredients: null,
         totalPrice: 2,
+        // local UI cases
         purchasable: false,
         purchasing: false,
         loading: false,
