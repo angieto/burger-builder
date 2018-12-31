@@ -7,3 +7,7 @@ export const PURCHASE_START = 'PURCHASE_START';
 export const PURCHASE_SUCCESS = 'PURCHASE_SUCCESS';
 export const PURCHASE_FAIL = 'PURCHASE_FAIL';
 export const PURCHASE_INIT = 'PURCHASE_INIT'; // dispatched when checkout page's loaded
+
+export const FETCH_ORDERS_START = 'FETCH_ORDERS_START';
+export const FETCH_ORDERS_SUCCESS = 'FETCH_ORDERS_SUCCESS';
+export const FETCH_ORDERS_FAIL = 'FETCH_ORDERS_FAIL';
