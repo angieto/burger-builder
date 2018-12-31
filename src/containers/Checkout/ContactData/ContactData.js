@@ -5,8 +5,10 @@ import Button from '../../../components/UI/Button/Button';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import Input from '../../../components/UI/Input/Input';
 import classes from './ContactData.module.css';
+import ErrorHandler from '../../../hoc/ErrorHandler/ErrorHandler';
 
 import { connect } from 'react-redux';
+import * as orderActions from '../../../store/actions/index';
 
 class ContactData extends Component {
     state = {
@@ -91,7 +93,6 @@ class ContactData extends Component {
     // methods
     orderHandler = (event) => {
         event.preventDefault();
-        this.setState({ loading: true });
         const formData = {};
         for (let formElementIdentifier in this.state.orderForm) {
             formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier];
@@ -101,15 +102,7 @@ class ContactData extends Component {
             price: this.props.price,
             orderData: formData
         }
-        axios.post('/orders.json', order)
-             .then(res => {
-                 this.setState({ loading: false });
-                 // we need to pass the props from Checkout to here to access its history info
-                 console.log(this.props.history);
-                 // redirect back to the main page
-                 this.props.history.push('/');
-             })
-             .catch(err => this.setState({ loading: false }));
+        this.props.onOrderBurger(order);
     }
 
     checkValidity (value, rules) {
@@ -221,4 +214,10 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(ContactData);
+const mapDispatchToProps = dispatch => {
+    return {
+        onOrderBurger: (orderData) => dispatch(orderActions.purchaseStart(orderData))
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ErrorHandler(ContactData, axios));
