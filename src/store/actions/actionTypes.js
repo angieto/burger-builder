@@ -6,3 +6,4 @@ export const FETCH_INGREDIENTS_FAILED = 'FETCH_INGREDIENTS_FAILED';
 export const PURCHASE_START = 'PURCHASE_START';
 export const PURCHASE_SUCCESS = 'PURCHASE_SUCCESS';
 export const PURCHASE_FAIL = 'PURCHASE_FAIL';
+export const PURCHASE_INIT = 'PURCHASE_INIT'; // dispatched when checkout page's loaded
