@@ -9,7 +9,7 @@ import ErrorHandler from '../../../hoc/ErrorHandler/ErrorHandler';
 
 import { connect } from 'react-redux';
 import * as orderActions from '../../../store/actions/index';
-import { updateObject } from '../../../shared/utility';
+import { updateObject, checkValidity, generateErrorMsg } from '../../../shared/utility';
 
 class ContactData extends Component {
     state = {
@@ -106,52 +106,12 @@ class ContactData extends Component {
         this.props.onOrderBurger(order, this.props.token);
     }
 
-    checkValidity (value, rules) {
-        let isValid = true;
-        // alternative way to handle undefined error for the drop down menu
-        // if (!rules) return isValid;
-        if (rules.required) {
-            isValid = value.trim() !== '' && isValid;
-        }
-        if (rules.minLength) {
-            isValid = value.length >= rules.minLength && isValid;
-        }
-        if (rules.maxLength) {
-            isValid = value.length <= rules.maxLength && isValid;
-        }
-        if (rules.isEmail) {
-            const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-            isValid = pattern.test(value) && isValid
-        }
-        if (rules.isNumeric) {
-            const pattern = /^\d+$/;
-            isValid = pattern.test(value) && isValid
-        }
-        return isValid;
-    }
-
-    generateErrorMsg (value, rules) {
-        let errorMsg = '';
-        if (rules.required && value.trim() === '') {
-            errorMsg = 'All fields are required!';
-            return errorMsg;
-        }
-        if (rules.minLength && value.length < rules.minLength) {
-            errorMsg = `Minimum ${rules.minLength} characters`;
-            return errorMsg;
-        }
-        if (rules.maxLength && value.length > rules.maxLength) {
-            errorMsg = `Input should not be longer than ${rules.maxLength} characters`;
-            return errorMsg;
-        }
-    }
-
     inputChangedHandler = (event, inputIdentifier) => {
         const updatedFormElement = updateObject(this.state.orderForm[inputIdentifier], {
             value: event.target.value,
-            valid: this.checkValidity(event.target.value, this.state.orderForm[inputIdentifier].validation),
+            valid: checkValidity(event.target.value, this.state.orderForm[inputIdentifier].validation),
             touched: true,
-            errorMsg: this.generateErrorMsg(event.target.value, this.state.orderForm[inputIdentifier].validation)
+            errorMsg: generateErrorMsg(event.target.value, this.state.orderForm[inputIdentifier].validation)
         }); 
         const updatedOrderForm = updateObject(this.state.orderForm, {
             [inputIdentifier]: updatedFormElement
