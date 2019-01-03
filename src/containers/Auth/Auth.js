@@ -6,6 +6,7 @@ import classes from './Auth.module.css';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import { Redirect } from 'react-router-dom';
+import { updateObject } from '../../shared/utility';
 
 class Auth extends Component {
     state = {
@@ -88,16 +89,15 @@ class Auth extends Component {
     }
 
     inputChangedHandler = (event, controlName) => {
-        const updatedControls = { 
-            ...this.state.controls,
-            [controlName]: {
-                ...this.state.controls[controlName],
-                value: event.target.value,
-                valid: this.checkValidity(event.target.value, this.state.controls[controlName].validation),
-                touched: true,
-                errorMsg: this.generateErrorMsg(event.target.value, this.state.controls[controlName].validation)
+        const updatedControls = updateObject(this.state.controls, {
+                [controlName]: updateObject(this.state.controls[controlName], {
+                    value: event.target.value,
+                    valid: this.checkValidity(event.target.value, this.state.controls[controlName].validation),
+                    touched: true,
+                    errorMsg: this.generateErrorMsg(event.target.value, this.state.controls[controlName].validation)
+                })
             } 
-        };
+        );
         console.log(updatedControls);
         this.setState({ controls: updatedControls });
     }
