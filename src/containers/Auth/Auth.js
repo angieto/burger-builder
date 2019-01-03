@@ -137,8 +137,17 @@ class Auth extends Component {
             form = <Spinner />
         }
 
+        let authError = null;
+
+        if (this.props.error) {
+            authError = (
+                <p className="text-danger">{ this.props.error.message }</p>
+            );
+        }
+        
         return (
             <div className={classes.Auth}>
+                {authError}
                 <form onSubmit={this.submitHandler}>
                     { form }
                     <Button btnType="Success">Submit</Button>
@@ -153,7 +162,8 @@ class Auth extends Component {
 
 const mapStateToProps = state => {
     return {
-        loading: state.auth.loading
+        loading: state.auth.loading,
+        error: state.auth.error
     }
 }
 
