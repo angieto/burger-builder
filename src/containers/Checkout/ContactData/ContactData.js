@@ -101,7 +101,7 @@ class ContactData extends Component {
             price: this.props.price,
             orderData: formData
         }
-        this.props.onOrderBurger(order);
+        this.props.onOrderBurger(order, this.props.token);
     }
 
     checkValidity (value, rules) {
@@ -145,16 +145,11 @@ class ContactData extends Component {
     }
 
     inputChangedHandler = (event, inputIdentifier) => {
-        // console.log(event.target.value);
         const updatedOrderForm = { ...this.state.orderForm };
-        // clone another extra level
         const updatedFormElement = { ...updatedOrderForm[inputIdentifier] }; 
         updatedFormElement.value = event.target.value;
-        // validate user's input
         updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
-        // if user click on input -> touched = true
         updatedFormElement.touched = true;
-        // custom ErrorMsg
         updatedFormElement.errorMsg = this.generateErrorMsg(updatedFormElement.value, updatedFormElement.validation);
         updatedOrderForm[inputIdentifier] = updatedFormElement;
 
@@ -210,13 +205,14 @@ const mapStateToProps = state => {
     return {
         ings: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.totalPrice,
-        loading: state.order.loading
+        loading: state.order.loading,
+        token: state.auth.token
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onOrderBurger: (orderData) => dispatch(orderActions.purchaseBurger(orderData))
+        onOrderBurger: (orderData, token) => dispatch(orderActions.purchaseBurger(orderData, token))
     }
 };
 
