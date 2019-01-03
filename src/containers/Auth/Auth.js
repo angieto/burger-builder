@@ -116,7 +116,7 @@ class Auth extends Component {
     componentDidMount() {
         // if user is not building a burger and go to authenticate page, redirect to main page after authenticated
         if (!this.props.building && this.props.authRedirectPath !== '/') {
-            this.onSetAuthRedirectPath();
+            this.props.onSetAuthRedirectPath();
         } 
     }
 
